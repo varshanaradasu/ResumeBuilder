@@ -1,28 +1,19 @@
 {
   "name": "resume-builder-mern",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Resume Builder MERN Stack Application",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "cd client && npm start",
+    "start": "cd backend && npm start",
+    "server": "cd backend && npm run server",
+    "client": "cd frontend && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.1"
-  },
   "devDependencies": {
-    "concurrently": "^9.2.1",
-    "nodemon": "^3.1.10"
+    "concurrently": "^9.2.1"
   }
 }
