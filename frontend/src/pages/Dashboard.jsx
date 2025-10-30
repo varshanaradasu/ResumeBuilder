@@ -4,7 +4,7 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  
+
   // Get user info from localStorage (simple approach)
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 

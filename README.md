@@ -4,12 +4,6 @@ A professional resume builder application built with MongoDB, Express.js, React,
 
 ## Features
 
-- 📝 **Multiple Resume Templates** - Choose from 5 different professional templates:
-  - Default: Clean and simple layout
-  - Modern: Gradient design with modern aesthetics
-  - Classic: Traditional professional format
-  - Professional: Sidebar layout with skill bars
-  - Creative: Eye-catching design with vibrant colors
 - 🎨 **Real-time Preview** - See your resume update live as you fill in information
 - 💾 **Save & Export** - Save resumes to database and download as PDF
 - 🔐 **User Authentication** - Sign up/Sign in functionality (ready for implementation)
@@ -73,8 +67,6 @@ npm run build
 npm start
 ```
 
-The application will be available at `http://localhost:3000`
-
 ## Usage
 
 1. Open http://localhost:3000 in your browser
@@ -84,41 +76,6 @@ The application will be available at `http://localhost:3000`
 5. Watch your resume update in real-time
 6. Download as PDF or save to database
 
-## Project Structure
-
-```
-resume-builder-mern/
-├── backend/                    # Backend API server
-│   ├── controllers/            # Route controllers
-│   ├── models/                 # MongoDB models
-│   ├── routes/                 # API routes
-│   ├── server.js               # Express server entry point
-│   ├── package.json            # Backend dependencies
-│   └── .env                    # Environment variables
-│
-├── frontend/                   # React frontend
-│   ├── public/                 # Static files
-│   ├── src/
-│   │   ├── components/         # Reusable components
-│   │   │   ├── templates/      # Resume templates
-│   │   │   │   ├── ModernTemplate.js
-│   │   │   │   ├── ClassicTemplate.js
-│   │   │   │   ├── ProfessionalTemplate.js
-│   │   │   │   └── CreativeTemplate.js
-│   │   │   ├── ResumeForm.js
-│   │   │   ├── ResumePreview.js
-│   │   │   └── Header.js
-│   │   ├── pages/              # Page components
-│   │   │   ├── Landing.js
-│   │   │   ├── Dashboard.js
-│   │   │   ├── TemplateSelector.js
-│   │   │   └── ResumeBuilder.js
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json            # Frontend dependencies
-│
-└── package.json                # Root package.json
-```
 
 ## Technologies Used
 

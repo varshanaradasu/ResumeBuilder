@@ -14,7 +14,7 @@ const ExperienceForm = ({ data, onUpdate }) => {
   };
 
   const updateExperience = (index, field, value) => {
-    const updated = data.map((exp, i) => 
+    const updated = data.map((exp, i) =>
       i === index ? { ...exp, [field]: value } : exp
     );
     onUpdate(updated);
@@ -33,24 +33,24 @@ const ExperienceForm = ({ data, onUpdate }) => {
           Add Experience
         </button>
       </div>
-      
+
       {data.length === 0 && (
         <p className="empty-state">No work experience added yet. Click "Add Experience" to get started.</p>
       )}
-      
+
       {data.map((experience, index) => (
         <div key={index} className="experience-item">
           <div className="item-header">
             <h3>Experience {index + 1}</h3>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="remove-btn"
               onClick={() => removeExperience(index)}
             >
               Remove
             </button>
           </div>
-          
+
           <div className="form-grid">
             <div className="form-group">
               <label>Company *</label>
@@ -62,7 +62,7 @@ const ExperienceForm = ({ data, onUpdate }) => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label>Position *</label>
               <input
@@ -73,7 +73,7 @@ const ExperienceForm = ({ data, onUpdate }) => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label>Start Date *</label>
               <input
@@ -83,7 +83,7 @@ const ExperienceForm = ({ data, onUpdate }) => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label>End Date</label>
               <input
@@ -93,7 +93,7 @@ const ExperienceForm = ({ data, onUpdate }) => {
                 disabled={experience.isCurrentJob}
               />
             </div>
-            
+
             <div className="form-group full-width">
               <label>
                 <input
@@ -104,7 +104,7 @@ const ExperienceForm = ({ data, onUpdate }) => {
                 Currently working here
               </label>
             </div>
-            
+
             <div className="form-group full-width">
               <label>Job Description</label>
               <textarea

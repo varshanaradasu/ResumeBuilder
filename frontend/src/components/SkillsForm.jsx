@@ -10,7 +10,7 @@ const SkillsForm = ({ data, onUpdate }) => {
   };
 
   const updateSkill = (index, field, value) => {
-    const updated = data.map((skill, i) => 
+    const updated = data.map((skill, i) =>
       i === index ? { ...skill, [field]: value } : skill
     );
     onUpdate(updated);
@@ -29,24 +29,24 @@ const SkillsForm = ({ data, onUpdate }) => {
           Add Skill
         </button>
       </div>
-      
+
       {data.length === 0 && (
         <p className="empty-state">No skills added yet. Click "Add Skill" to get started.</p>
       )}
-      
+
       {data.map((skill, index) => (
         <div key={index} className="skill-item">
           <div className="item-header">
             <h3>Skill {index + 1}</h3>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="remove-btn"
               onClick={() => removeSkill(index)}
             >
               Remove
             </button>
           </div>
-          
+
           <div className="form-grid">
             <div className="form-group">
               <label>Skill Name *</label>
@@ -58,7 +58,7 @@ const SkillsForm = ({ data, onUpdate }) => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label>Proficiency Level *</label>
               <select

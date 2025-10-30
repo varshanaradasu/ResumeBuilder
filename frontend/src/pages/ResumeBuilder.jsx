@@ -40,7 +40,7 @@ function ResumeBuilder() {
         },
         body: JSON.stringify(resumeData),
       });
-      
+
       if (response.ok) {
         alert('Resume saved successfully!');
       } else {
@@ -65,7 +65,7 @@ function ResumeBuilder() {
         useCORS: true,
         allowTaint: true
       });
-      
+
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;

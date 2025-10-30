@@ -20,13 +20,11 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple validation
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       return;
     }
     if (formData.name && formData.email && formData.password) {
-      // Store user info in localStorage (simple approach)
       const userInfo = {
         name: formData.name,
         email: formData.email

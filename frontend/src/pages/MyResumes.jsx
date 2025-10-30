@@ -64,7 +64,7 @@ const MyResumes = () => {
       <div className="resumes-content">
         <div className="resumes-container">
           <h2>My Resumes</h2>
-          
+
           {loading ? (
             <div className="loading">Loading your resumes...</div>
           ) : resumes.length === 0 ? (
@@ -96,7 +96,7 @@ const MyResumes = () => {
                       <Link to="/builder" className="edit-btn">
                         Edit
                       </Link>
-                      <button 
+                      <button
                         className="delete-btn"
                         onClick={() => deleteResume(resume._id)}
                       >
