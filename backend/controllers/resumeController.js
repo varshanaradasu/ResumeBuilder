@@ -1,6 +1,5 @@
 const Resume = require('../models/Resume');
 
-// Get all resumes
 exports.getAllResumes = async (req, res) => {
   try {
     const resumes = await Resume.find().sort({ updatedAt: -1 });
@@ -10,7 +9,6 @@ exports.getAllResumes = async (req, res) => {
   }
 };
 
-// Get single resume by ID
 exports.getResumeById = async (req, res) => {
   try {
     const resume = await Resume.findById(req.params.id);
@@ -23,7 +21,6 @@ exports.getResumeById = async (req, res) => {
   }
 };
 
-// Create new resume
 exports.createResume = async (req, res) => {
   try {
     const resume = new Resume(req.body);
@@ -34,7 +31,6 @@ exports.createResume = async (req, res) => {
   }
 };
 
-// Update resume
 exports.updateResume = async (req, res) => {
   try {
     const resume = await Resume.findByIdAndUpdate(
@@ -51,7 +47,6 @@ exports.updateResume = async (req, res) => {
   }
 };
 
-// Delete resume
 exports.deleteResume = async (req, res) => {
   try {
     const resume = await Resume.findByIdAndDelete(req.params.id);

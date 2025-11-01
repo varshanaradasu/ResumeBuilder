@@ -18,9 +18,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple validation - store user info and redirect to dashboard
     if (formData.email && formData.password) {
-      // Store user info in localStorage (simple approach)
       const userInfo = {
         name: formData.email.split('@')[0], // Use email prefix as name
         email: formData.email

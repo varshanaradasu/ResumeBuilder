@@ -14,7 +14,6 @@ const MyResumes = () => {
   };
 
   useEffect(() => {
-    // Fetch resumes from API
     const fetchResumes = async () => {
       try {
         const response = await fetch('/api/resumes');

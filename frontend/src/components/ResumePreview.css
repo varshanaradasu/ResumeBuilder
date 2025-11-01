@@ -63,7 +63,6 @@
   border-bottom: 2px solid #4CAF50;
 }
 
-/* Experience Items */
 .experience-item,
 .education-item,
 .project-item {
@@ -168,7 +167,6 @@
   text-decoration: underline;
 }
 
-/* Empty State */
 .empty-preview {
   text-align: center;
   padding: 60px 20px;
@@ -177,7 +175,6 @@
   font-style: italic;
 }
 
-/* Print Styles */
 @media print {
   .resume-preview {
     box-shadow: none;
@@ -190,7 +187,6 @@
   }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .resume-preview {
     padding: 20px;

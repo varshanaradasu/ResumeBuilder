@@ -25,7 +25,7 @@ const Settings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Update user info in localStorage
+
     const updatedUserInfo = {
       ...userInfo,
       name: formData.name,
