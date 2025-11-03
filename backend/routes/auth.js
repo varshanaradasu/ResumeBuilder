@@ -20,11 +20,8 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        const cleanPassword = String(password).trim();
-        const hashedPassword = await bcrypt.hash(cleanPassword, 10);
-        console.log('Password hashed successfully:', hashedPassword);
-
-        const user = new User({ name: name.trim(), email: email.trim().toLowerCase(), password: hashedPassword });
+        // Password will be hashed automatically by the pre-save hook in the User model
+        const user = new User({ name, email, password });
         await user.save();
 
         console.log('User saved:', user.email);
@@ -40,18 +37,14 @@ router.post('/signin', async (req, res) => {
         console.log('Signin request received:', req.body);
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email: email.trim().toLowerCase() });
+        const user = await User.findOne({ email });
         if (!user) {
             console.log('User not found:', email);
             return res.status(400).json({ message: 'Invalid credentials (no user)' });
         }
 
-        const plainPassword = String(password).trim();
         console.log('Comparing passwords...');
-        console.log('Stored hash:', user.password);
-        console.log('Plain password:', plainPassword);
-
-        const isMatch = await bcrypt.compare(plainPassword, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         console.log('Compare result:', isMatch);
 
         if (!isMatch) {

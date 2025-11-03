@@ -13,7 +13,9 @@ app.use(cors({
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
-})); app.use(express.json());
+}));
+app.use(express.json());
+
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://varsha:varsha@cluster0.n7rvzuu.mongodb.net/resumeBuilder');

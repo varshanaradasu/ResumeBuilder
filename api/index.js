@@ -17,6 +17,8 @@ const connectDB = async () => {
 };
 
 connectDB();
+const authRoutes = require("../backend/routes/auth");
+app.use("/api/auth", authRoutes);
 
 const resumeRoutes = require("../backend/routes/resume");
 app.use("/api/resumes", resumeRoutes);
