@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const ResumeSchema = new mongoose.Schema({
+  userEmail: { type: String, required: true }, // Add this line 👈
+
   personalInfo: {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },

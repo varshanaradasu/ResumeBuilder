@@ -19,7 +19,7 @@ const Header = ({ onSave, onDownloadPDF }) => {
     <header className="header">
       <div className="header-content">
         <div className="header-left">
-          <h1 onClick={goToDashboard} style={{cursor: 'pointer'}}>Resume Builder</h1>
+          <h1 onClick={goToDashboard} style={{ cursor: 'pointer' }}>Resume Builder</h1>
         </div>
         <div className="header-right">
           <span className="user-welcome">Hello, {userInfo.name}!</span>

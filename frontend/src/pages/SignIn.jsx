@@ -16,17 +16,29 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.email && formData.password) {
-      const userInfo = {
-        name: formData.email.split('@')[0], // Use email prefix as name
-        email: formData.email
-      };
-      localStorage.setItem('userInfo', JSON.stringify(userInfo));
-      navigate('/dashboard');
-    } else {
-      alert('Please fill in all fields');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert('Login successful!');
+        localStorage.setItem('userInfo', JSON.stringify(data.user));
+        navigate('/dashboard');
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('Error connecting to backend');
     }
   };
 

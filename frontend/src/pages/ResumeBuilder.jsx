@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ResumeForm from '../components/ResumeForm';
 import ResumePreview from '../components/ResumePreview';
 import Header from '../components/Header';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import '../App.css';
+import { useParams } from "react-router-dom";
 
 function ResumeBuilder() {
+  const { id } = useParams(); // resume ID if editing
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+
+  // ✅ define base backend URL once here
+  const baseURL = "http://localhost:5000/api/resumes";
+
   const [resumeData, setResumeData] = useState({
     personalInfo: {
       firstName: '',
@@ -23,7 +30,34 @@ function ResumeBuilder() {
   });
 
   const [activeSection, setActiveSection] = useState('personal');
+  const [loading, setLoading] = useState(false);
 
+  // ✅ Fetch existing resume if ID is present (Edit Mode)
+  useEffect(() => {
+    if (id) {
+      const fetchResumeData = async () => {
+        setLoading(true);
+        try {
+          // ⬇️ use full backend URL
+          const response = await fetch(`${baseURL}/${id}`);
+          if (response.ok) {
+            const data = await response.json();
+            setResumeData(data);
+          } else {
+            console.error('Failed to fetch resume');
+          }
+        } catch (error) {
+          console.error('Error fetching resume:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchResumeData();
+    }
+  }, [id]);
+
+  // ✅ Update resumeData when form changes
   const updateResumeData = (section, data) => {
     setResumeData(prev => ({
       ...prev,
@@ -31,27 +65,41 @@ function ResumeBuilder() {
     }));
   };
 
+  // ✅ Save or Update Resume
   const saveResume = async () => {
     try {
-      const response = await fetch('/api/resumes', {
-        method: 'POST',
+      const method = id ? 'PUT' : 'POST';
+      const url = id ? `${baseURL}/${id}` : baseURL;
+
+      // prepare request body
+      const payload = {
+        ...resumeData,
+        userEmail: userInfo.email || resumeData.personalInfo.email, // ✅ ensure correct user linkage
+      };
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(resumeData),
+        body: JSON.stringify(payload),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        alert('Resume saved successfully!');
+        alert(id ? '✅ Resume updated successfully!' : '✅ Resume saved successfully!');
       } else {
-        alert('Error saving resume. Please try again.');
+        alert(`❌ Error: ${data.message || 'Unable to save resume'}`);
       }
     } catch (error) {
       console.error('Error saving resume:', error);
-      alert('Error saving resume. Please try again.');
+      alert('❌ Error saving resume. Please try again.');
     }
   };
 
+
+  // ✅ Download as PDF
   const downloadPDF = async () => {
     const resumeElement = document.querySelector('.resume-preview');
     if (!resumeElement) {
@@ -72,7 +120,6 @@ function ResumeBuilder() {
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
-
       let position = 0;
 
       pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
@@ -91,6 +138,8 @@ function ResumeBuilder() {
       alert('Error generating PDF. Please try again.');
     }
   };
+
+  if (loading) return <div className="loading">Loading resume...</div>;
 
   return (
     <div className="App">

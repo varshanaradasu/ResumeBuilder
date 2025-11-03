@@ -29,7 +29,7 @@ const Dashboard = () => {
       <div className="dashboard-content">
         <div className="dashboard-card">
           <div className="user-profile">
-            <div className="profile-avatar">
+            <div className="profilvatar">
               {(userInfo.name || 'U').charAt(0).toUpperCase()}
             </div>
             <div className="profile-info">

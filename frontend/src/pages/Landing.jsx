@@ -8,6 +8,24 @@ const Landing = () => {
       <div className="overlay"></div>
       <div className="landing-container">
         <div className="landing-content">
+          <h1
+            style={{
+              textAlign: 'center',
+              fontSize: '4rem',
+              fontWeight: '900',
+              textTransform: 'uppercase',
+              background: 'linear-gradient(90deg, #ffffff, #dcd6f7, #ffffff)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '4px',
+              marginBottom: '25px',
+              marginTop: '20px',
+              textShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
+            }}
+          >
+            RESUME BUILDER
+          </h1>
+
           <h1>Build, Save & Download Your Resume Easily</h1>
           <p>
             Create a professional resume in just a few minutes. Start from scratch,

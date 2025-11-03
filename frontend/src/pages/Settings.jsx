@@ -5,7 +5,7 @@ import './Settings.css';
 const Settings = () => {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-  
+
   const [formData, setFormData] = useState({
     name: userInfo.name || '',
     email: userInfo.email || ''
@@ -35,6 +35,30 @@ const Settings = () => {
     alert('Settings updated successfully!');
   };
 
+  // ✅ Simple Export — shows all resumes stored in localStorage
+  const handleExportData = () => {
+    const resumes = JSON.parse(localStorage.getItem('resumes') || '[]');
+
+    if (resumes.length === 0) {
+      alert('No resumes found to export.');
+      return;
+    }
+
+    // Create a simple downloadable text file
+    const data = JSON.stringify(resumes, null, 2);
+    const element = document.createElement('a');
+    element.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
+    );
+    element.setAttribute('download', `${formData.name || 'user'}_resumes.txt`);
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+
+    alert('Resumes exported successfully!');
+  };
+
   return (
     <div className="settings">
       <div className="settings-header">
@@ -52,7 +76,7 @@ const Settings = () => {
       <div className="settings-content">
         <div className="settings-container">
           <h2>Settings</h2>
-          
+
           <div className="settings-card">
             <div className="settings-section">
               <h3>Profile Information</h3>
@@ -91,17 +115,20 @@ const Settings = () => {
                     <h4>Export Data</h4>
                     <p>Download all your resume data</p>
                   </div>
-                  <button className="action-btn secondary">
+                  <button
+                    className="action-btn secondary"
+                    onClick={handleExportData}
+                  >
                     Export
                   </button>
                 </div>
-                
+
                 <div className="action-item">
                   <div className="action-info">
                     <h4>Clear All Data</h4>
                     <p>Remove all saved resumes</p>
                   </div>
-                  <button 
+                  <button
                     className="action-btn danger"
                     onClick={() => {
                       if (window.confirm('Are you sure? This will delete all your resumes.')) {
@@ -118,7 +145,7 @@ const Settings = () => {
                     <h4>Delete Account</h4>
                     <p>Permanently delete your account</p>
                   </div>
-                  <button 
+                  <button
                     className="action-btn danger"
                     onClick={() => {
                       if (window.confirm('Are you sure? This action cannot be undone.')) {

@@ -8,6 +8,9 @@ const MyResumes = () => {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
+  // ✅ Step 3: use same baseURL as in ResumeBuilder
+  const baseURL = "http://localhost:5000/api/resumes";
+
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
     navigate('/');
@@ -16,7 +19,8 @@ const MyResumes = () => {
   useEffect(() => {
     const fetchResumes = async () => {
       try {
-        const response = await fetch('/api/resumes');
+        // ⬇️ use full backend URL for fetching resumes
+        const response = await fetch(`${baseURL}?email=${userInfo.email}`);
         if (response.ok) {
           const data = await response.json();
           setResumes(data);
@@ -28,13 +32,16 @@ const MyResumes = () => {
       }
     };
 
-    fetchResumes();
-  }, []);
+    if (userInfo?.email) {
+      fetchResumes();
+    }
+  }, [userInfo.email]);
 
   const deleteResume = async (id) => {
     if (window.confirm('Are you sure you want to delete this resume?')) {
       try {
-        const response = await fetch(`/api/resumes/${id}`, {
+        // ⬇️ use full backend URL for delete
+        const response = await fetch(`${baseURL}/${id}`, {
           method: 'DELETE'
         });
         if (response.ok) {
@@ -92,9 +99,11 @@ const MyResumes = () => {
                       {new Date(resume.updatedAt).toLocaleDateString()}
                     </span>
                     <div className="action-buttons">
-                      <Link to="/builder" className="edit-btn">
+                      {/* ✅ Edit navigates to ResumeBuilder with ID */}
+                      <Link to={`/builder/${resume._id}`} className="edit-btn">
                         Edit
                       </Link>
+
                       <button
                         className="delete-btn"
                         onClick={() => deleteResume(resume._id)}

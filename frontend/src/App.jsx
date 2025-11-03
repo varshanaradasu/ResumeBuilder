@@ -19,8 +19,11 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-resumes" element={<MyResumes />} />
+          <Route path="/edit/:id" element={<ResumeBuilder />} />
+          <Route path="/create" element={<ResumeBuilder />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/builder" element={<ResumeBuilder />} />
+          <Route path="/builder/:id" element={<ResumeBuilder />} />
         </Routes>
       </div>
     </Router>
