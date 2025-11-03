@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); // ✅ make sure bcryptjs is installed
 const User = require('../models/user');
 
 const router = express.Router();
@@ -8,17 +8,25 @@ router.post('/signup', async (req, res) => {
     try {
         console.log('Signup request received:', req.body);
         const { name, email, password } = req.body;
-        if (!name || !email || !password)
+
+        if (!name || !email || !password) {
+            console.log('Missing field');
             return res.status(400).json({ message: 'All fields are required' });
+        }
 
         const existingUser = await User.findOne({ email });
-        if (existingUser)
+        if (existingUser) {
+            console.log('User already exists:', email);
             return res.status(400).json({ message: 'User already exists' });
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('Password hashed successfully:', hashedPassword);
+
         const user = new User({ name, email, password: hashedPassword });
         await user.save();
 
+        console.log('User saved:', user.email);
         res.status(201).json({ message: 'User registered successfully', user });
     } catch (error) {
         console.error('Signup error:', error);
@@ -32,13 +40,21 @@ router.post('/signin', async (req, res) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        if (!user)
-            return res.status(400).json({ message: 'Invalid credentials' });
+        if (!user) {
+            console.log('User not found:', email);
+            return res.status(400).json({ message: 'Invalid credentials (no user)' });
+        }
 
+        console.log('Comparing passwords...');
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch)
-            return res.status(400).json({ message: 'Invalid credentials' });
+        console.log('Compare result:', isMatch);
 
+        if (!isMatch) {
+            console.log('Password mismatch for:', email);
+            return res.status(400).json({ message: 'Invalid credentials (wrong password)' });
+        }
+
+        console.log('Login successful for:', email);
         res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
         console.error('Signin error:', error);
