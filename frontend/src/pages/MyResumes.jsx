@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './MyResumes.css';
-import axios from "axios";
 import API_BASE_URL from "../config";
 
 
@@ -38,7 +37,7 @@ const MyResumes = () => {
     if (userInfo?.email) {
       fetchResumes();
     }
-  }, [userInfo.email]);
+  }, [userInfo.email, baseURL]);
 
   const deleteResume = async (id) => {
     if (window.confirm('Are you sure you want to delete this resume?')) {

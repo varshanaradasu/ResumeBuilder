@@ -6,7 +6,6 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import '../App.css';
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import API_BASE_URL from "../config";
 
 
@@ -58,7 +57,7 @@ function ResumeBuilder() {
 
       fetchResumeData();
     }
-  }, [id]);
+  }, [id, baseURL]);
 
   // ✅ Update resumeData when form changes
   const updateResumeData = (section, data) => {
