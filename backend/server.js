@@ -33,13 +33,16 @@ app.get('/api/test', (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   const frontendPath = path.join(__dirname, '../frontend/build');
+
+  // Serve static frontend files
   app.use(express.static(frontendPath));
 
-  // ✅ Use "/*" instead of "*"
-  app.get('/*', (req, res) => {
+  // Catch-all route — send React app for any unmatched route
+  app.use((req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
   });
 }
+
 
 const PORT = process.env.PORT || 5000;
 
