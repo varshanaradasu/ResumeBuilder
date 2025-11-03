@@ -5,8 +5,14 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: [
+    'https://resumebuilder4042.vercel.app',
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+})); app.use(express.json());
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://varsha:varsha@cluster0.n7rvzuu.mongodb.net/resumeBuilder');
