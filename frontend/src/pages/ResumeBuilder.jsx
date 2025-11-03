@@ -6,13 +6,16 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import '../App.css';
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import API_BASE_URL from "../config";
+
 
 function ResumeBuilder() {
   const { id } = useParams(); // resume ID if editing
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   // ✅ define base backend URL once here
-  const baseURL = "http://localhost:5000/api/resumes";
+  const baseURL = `${API_BASE_URL}/api/resumes`;
 
   const [resumeData, setResumeData] = useState({
     personalInfo: {

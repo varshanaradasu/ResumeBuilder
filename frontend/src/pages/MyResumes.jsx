@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './MyResumes.css';
+import axios from "axios";
+import API_BASE_URL from "../config";
+
 
 const MyResumes = () => {
   const [resumes, setResumes] = useState([]);
@@ -9,7 +12,7 @@ const MyResumes = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   // ✅ Step 3: use same baseURL as in ResumeBuilder
-  const baseURL = "http://localhost:5000/api/resumes";
+  const baseURL = `${API_BASE_URL}/api/resumes`;
 
   const handleLogout = () => {
     localStorage.removeItem('userInfo');

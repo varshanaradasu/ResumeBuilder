@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
+import axios from "axios";
+import API_BASE_URL from "../config"; // ✅ Make sure you created config.js
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,25 +23,22 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        })
+      // ✅ Use axios + your dynamic backend URL
+      const response = await axios.post(`${API_BASE_URL}/api/auth/signin`, {
+        email: formData.email,
+        password: formData.password
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        alert('Login successful!');
-        localStorage.setItem('userInfo', JSON.stringify(data.user));
-        navigate('/dashboard');
-      } else {
-        alert(data.message);
-      }
+      alert('Login successful!');
+      localStorage.setItem('userInfo', JSON.stringify(response.data.user));
+      navigate('/dashboard');
     } catch (error) {
-      alert('Error connecting to backend');
+      console.error(error);
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert('Error connecting to backend');
+      }
     }
   };
 

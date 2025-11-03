@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
+import axios from "axios";
+import API_BASE_URL from "../config";  // ✅ import config
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ const SignUp = () => {
     password: '',
     confirmPassword: ''
   });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,29 +30,24 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password
-        })
+      const response = await axios.post(`${API_BASE_URL}/api/auth/signup`, {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        alert('Account created successfully!');
-        localStorage.setItem('userInfo', JSON.stringify(data.user));
-        navigate('/dashboard');
-      } else {
-        alert(data.message);
-      }
+      alert('Account created successfully!');
+      localStorage.setItem('userInfo', JSON.stringify(response.data.user));
+      navigate('/dashboard');
     } catch (error) {
-      alert('Error connecting to backend');
+      console.error(error);
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert('Error connecting to backend');
+      }
     }
   };
-
 
   return (
     <div className="auth-container">
