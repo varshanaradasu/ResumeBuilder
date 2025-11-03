@@ -30,18 +30,7 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend server is running!' });
 });
 
-if (process.env.NODE_ENV === 'production') {
-  const path = require('path');
-  const frontendPath = path.join(__dirname, '../frontend/build');
 
-  // Serve static frontend files
-  app.use(express.static(frontendPath));
-
-  // Catch-all route — send React app for any unmatched route
-  app.use((req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
-}
 
 
 const PORT = process.env.PORT || 5000;
