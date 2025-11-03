@@ -1,13 +1,13 @@
 const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs'); // ✅ Added
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
-// ✅ Signup route
+const router = express.Router();
+
 router.post('/signup', async (req, res) => {
     try {
+        console.log('Signup request received:', req.body);
         const { name, email, password } = req.body;
-
         if (!name || !email || !password)
             return res.status(400).json({ message: 'All fields are required' });
 
@@ -26,26 +26,20 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// ✅ Signin route
 router.post('/signin', async (req, res) => {
     try {
+        console.log('Signin request received:', req.body);
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: 'User not found' });
+        if (!user)
+            return res.status(400).json({ message: 'Invalid credentials' });
 
-        const isMatch = await user.matchPassword(password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
             return res.status(400).json({ message: 'Invalid credentials' });
 
-        res.status(200).json({
-            message: 'Signin successful',
-            user: {
-                _id: user._id,
-                name: user.name,
-                email: user.email
-            }
-        });
+        res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
         console.error('Signin error:', error);
         res.status(500).json({ message: 'Server error during signin' });

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import axios from "axios";
-import API_BASE_URL from "../config"; // ✅ Make sure you created config.js
+import API_BASE_URL from "../config";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +23,6 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      // ✅ Use axios + your dynamic backend URL
       const response = await axios.post(`${API_BASE_URL}/api/auth/signin`, {
         email: formData.email,
         password: formData.password

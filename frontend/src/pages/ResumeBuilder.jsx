@@ -10,10 +10,8 @@ import API_BASE_URL from "../config";
 
 
 function ResumeBuilder() {
-  const { id } = useParams(); // resume ID if editing
+  const { id } = useParams();
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-
-  // ✅ define base backend URL once here
   const baseURL = `${API_BASE_URL}/api/resumes`;
 
   const [resumeData, setResumeData] = useState({
@@ -34,13 +32,11 @@ function ResumeBuilder() {
   const [activeSection, setActiveSection] = useState('personal');
   const [loading, setLoading] = useState(false);
 
-  // ✅ Fetch existing resume if ID is present (Edit Mode)
   useEffect(() => {
     if (id) {
       const fetchResumeData = async () => {
         setLoading(true);
         try {
-          // ⬇️ use full backend URL
           const response = await fetch(`${baseURL}/${id}`);
           if (response.ok) {
             const data = await response.json();
@@ -59,7 +55,6 @@ function ResumeBuilder() {
     }
   }, [id, baseURL]);
 
-  // ✅ Update resumeData when form changes
   const updateResumeData = (section, data) => {
     setResumeData(prev => ({
       ...prev,
@@ -67,13 +62,11 @@ function ResumeBuilder() {
     }));
   };
 
-  // ✅ Save or Update Resume
   const saveResume = async () => {
     try {
       const method = id ? 'PUT' : 'POST';
       const url = id ? `${baseURL}/${id}` : baseURL;
 
-      // prepare request body
       const payload = {
         ...resumeData,
         userEmail: userInfo.email || resumeData.personalInfo.email, // ✅ ensure correct user linkage
@@ -101,7 +94,6 @@ function ResumeBuilder() {
   };
 
 
-  // ✅ Download as PDF
   const downloadPDF = async () => {
     const resumeElement = document.querySelector('.resume-preview');
     if (!resumeElement) {

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Resume = require('../models/Resume');
 
-// ✅ Get all resumes for a specific user
 router.get('/', async (req, res) => {
     try {
         const userEmail = req.query.email;
@@ -19,7 +18,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// ✅ Create new resume
 router.post('/', async (req, res) => {
     try {
         const { personalInfo, userEmail } = req.body;
@@ -28,7 +26,6 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'User email is required to save resume' });
         }
 
-        // ✅ Use whichever email is available
         const finalEmail = userEmail || personalInfo.email;
 
         const newResume = new Resume({
@@ -50,7 +47,6 @@ router.post('/', async (req, res) => {
 });
 
 
-// Get resume by ID
 router.get('/:id', async (req, res) => {
     try {
         const resume = await Resume.findById(req.params.id);
@@ -69,7 +65,7 @@ router.get('/user/:email', async (req, res) => {
         res.status(500).json({ message: 'Error fetching resumes', error });
     }
 });
-// Update resume
+
 router.put('/:id', async (req, res) => {
     try {
         const updated = await Resume.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -79,7 +75,6 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// ✅ Delete resume
 router.delete('/:id', async (req, res) => {
     try {
         await Resume.findByIdAndDelete(req.params.id);
