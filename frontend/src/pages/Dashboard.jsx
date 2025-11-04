@@ -47,7 +47,7 @@ const Dashboard = () => {
             <h2>Resume Builder</h2>
           </div>
           <div className="user-section">
-            <span className="user-name">  come, {userInfo.name || 'User'}! 👋</span>
+            <span className="user-name">  Welcome, {userInfo.name || 'User'}! 👋</span>
             <button className="logout-btn" onClick={handleLogout}>
               <span>Logout</span>
               <span className="logout-icon">→</span>
